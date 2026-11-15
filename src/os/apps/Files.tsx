@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CATEGORIES, projectsBy, projects, type Project, type ProjectCategory } from "@/data/resume";
+import { CATEGORIES, projectsBy, projects, workPath, type Project, type ProjectCategory } from "@/data/resume";
 import { DeviceShowcase } from "@/components/devices";
 import { ProjectStory } from "@/components/ProjectStory";
 import { IconBack } from "../icons";
@@ -37,6 +37,9 @@ function ProjectDetail({ project, onBack }: { project: Project; onBack: () => vo
         {project.badge && <Badge>{project.badge}</Badge>}
       </div>
       <p className="mt-1 text-sm text-muted">{project.tagline}</p>
+      <a href={workPath(project)} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-sm font-medium text-accent hover:underline">
+        Open full case study page ↗
+      </a>
       {project.video && (
         <video
           src={project.video}

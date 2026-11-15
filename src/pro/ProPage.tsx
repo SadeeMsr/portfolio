@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, MotionConfig, motion, useScroll, useSpring, type Variants } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
-import { CATEGORIES, education, experience, profile, projects, projectsBy, skills, type Project } from "@/data/resume";
+import { CATEGORIES, education, experience, profile, projects, projectsBy, skills, workPath, type Project } from "@/data/resume";
 import { DeviceShowcase } from "@/components/devices";
 import { ProjectLinks, ProjectStory } from "@/components/ProjectStory";
 import { gmailComposeUrl, useCopyEmail } from "@/os/apps/Mail";
@@ -464,6 +464,9 @@ function ProjectModal({ p, onClose }: { p: Project; onClose: () => void }) {
             {p.badge && <Badge>{p.badge}</Badge>}
           </div>
           <p className="mt-1 text-muted">{p.tagline}</p>
+          <Link href={workPath(p)} className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+            Open full case study page <span aria-hidden>↗</span>
+          </Link>
           {p.video && (
             <video src={p.video} autoPlay muted loop playsInline className="mt-6 w-full rounded-xl border border-line bg-black" aria-label={`${p.name} product demo`} />
           )}

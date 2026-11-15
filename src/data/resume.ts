@@ -120,6 +120,8 @@ export type Shot = { label: string; desktop: string; mobile?: string };
 
 export type Project = {
   slug: string;
+  /** URL slug for the /work page when it should differ from slug */
+  page?: string;
   name: string;
   category: ProjectCategory;
   tagline: string;
@@ -478,6 +480,7 @@ export const projects: Project[] = [
   },
   {
     slug: "spade-site",
+    page: "spade-digital",
     name: "Spade Digital USA",
     category: "design",
     tagline: "Agency website with scroll-driven animation and a rotating work showcase",
@@ -501,6 +504,7 @@ export const projects: Project[] = [
   },
   {
     slug: "oindriza",
+    page: "oindriza-reza",
     name: "Oindriza Reza",
     category: "design",
     tagline: "Portfolio for an architect and urban researcher",
@@ -568,3 +572,8 @@ export const skills: Skill[] = [
   ...proficient.map(([name, group]) => ({ name, group, level: "proficient" as const })),
   ...basic.map(([name, group]) => ({ name, group, level: "basic" as const })),
 ];
+
+/** Path of a project's standalone case-study page, e.g. /work/barnyard-recs */
+export const workPath = (p: Project) => `/work/${p.page ?? p.slug}`;
+export const projectByPage = (page: string) => projects.find((p) => (p.page ?? p.slug) === page);
+export const SITE_URL = "https://rohanships.com";
