@@ -341,7 +341,7 @@ function AIWorkflow() {
   return (
     <Section id="ai" n="01" kicker="AI-native engineering" title="How I build with AI">
       <motion.p variants={rise} {...inView} className="-mt-4 mb-10 max-w-2xl text-lg text-fg/80">
-        It&apos;s 2026: I ship with AI agents every day, and I&apos;m accountable for every line they write. AI makes me faster; engineering judgement keeps it correct.
+        It&apos;s 2026, I ship with AI agents every day, and I&apos;m accountable for every line they write. AI makes me faster &amp; my engineering judgement keeps it correct.
       </motion.p>
 
       <motion.ol variants={stagger} {...inView} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

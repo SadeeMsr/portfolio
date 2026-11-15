@@ -160,11 +160,11 @@ export default function Landing() {
 
                 {/* text */}
                 <div className="relative p-6 md:p-10">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
                     {isOS ? <RohanLogo size={22} /> : <span className="h-2.5 w-2.5 rounded-full bg-white" />}
                     <span className="text-xs font-semibold tracking-[0.2em] text-white/60 uppercase">{o.kicker}</span>
                     {last === m && (
-                      <span className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white/90 uppercase">
+                      <span className="shrink-0 whitespace-nowrap rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] leading-4 font-semibold tracking-wide text-white/90 uppercase">
                         Last visited
                       </span>
                     )}
