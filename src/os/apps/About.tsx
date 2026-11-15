@@ -31,7 +31,7 @@ export default function About() {
   const { openApp } = useOS();
   const { copied, copy } = useCopyEmail();
   const current = experience[0];
-  const flagship = projects[0];
+  const flagship = projects.find((p) => p.slug === "truckerpaperwork") ?? projects[0];
 
   return (
     <div className="@container h-full overflow-auto os-scroll">
@@ -124,9 +124,9 @@ export default function About() {
           onClick={() => openApp("projects")}
           className="group mt-6 flex w-full items-center gap-4 rounded-2xl border border-line bg-surface-2 p-4 text-left transition-colors hover:border-accent/60"
         >
-          {flagship.image && (
+          {flagship.shots && (
             <span className="relative hidden h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-line @sm:block">
-              <Image src={flagship.image} alt="" fill sizes="96px" className="object-cover object-top" />
+              <Image src={flagship.shots.desktop} alt="" fill sizes="96px" className="object-cover object-top" />
             </span>
           )}
           <span className="min-w-0 flex-1">

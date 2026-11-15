@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useReducer, useRef, useState, type MouseEvent as RMouseEvent } from "react";
 import { profile } from "@/data/resume";
 import { APPS, type AppId } from "../apps";
@@ -184,6 +185,16 @@ export function Desktop({ onRestart, firstBoot }: { onRestart: () => void; first
         <main ref={areaRef} className="absolute top-8 right-0 bottom-0 left-16" onContextMenu={onContext} onPointerDown={(e) => e.target === e.currentTarget && setSelectedIcon(null)}>
           {/* desktop icons */}
           <div className="absolute top-3 right-3 flex flex-col gap-1" onContextMenu={(e) => e.preventDefault()}>
+            <Link
+              href="/pro"
+              title="Switch to the professional portfolio"
+              className="flex w-24 flex-col items-center gap-1 rounded-lg p-2 text-white hover:bg-white/10"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-[11px] bg-gradient-to-b from-[#2b2b2f] to-[#141416] text-sm font-bold shadow-[0_2px_3px_rgba(0,0,0,0.35)] ring-1 ring-white/15">
+                Pro
+              </span>
+              <span className="text-xs leading-tight [text-shadow:0_1px_2px_rgba(0,0,0,.8)]">Pro mode</span>
+            </Link>
             {DESKTOP_ICONS.map((d) => (
               <button
                 key={d.id}

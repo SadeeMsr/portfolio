@@ -7,7 +7,7 @@ import { useOS } from "../context";
 const LINKS: { id: AppId; label: string; hint: string }[] = [
   { id: "about", label: "About Me", hint: "who I am" },
   { id: "experience", label: "Release Notes", hint: "work experience" },
-  { id: "projects", label: "Files", hint: "projects & research" },
+  { id: "projects", label: "Files", hint: "projects & case studies" },
   { id: "terminal", label: "Terminal", hint: "try `help`" },
   { id: "game", label: "Bug Squasher", hint: "you've earned a break" },
 ];
@@ -39,10 +39,10 @@ export default function Readme() {
           ))}
           <li>
             <span className="text-muted">- </span>
-            <a href="/resume" className="text-accent underline-offset-2 hover:underline">
-              Recruiter Mode
+            <a href="/pro" className="text-accent underline-offset-2 hover:underline">
+              Pro mode
             </a>
-            <span className="text-muted"> · in a hurry? one plain page, no fun allowed</span>
+            <span className="text-muted"> · in a hurry? the clean, professional version</span>
           </li>
         </ul>
 

@@ -1,12 +1,12 @@
 // Single source of truth for every view: desktop apps, mobile apps,
-// the terminal and Recruiter Mode all read from here.
+// the terminal, the landing page and Pro mode all read from here.
 
 export const profile = {
   name: "Md Shadi Rohan",
   shortName: "Rohan",
   handle: "rohan",
   title: "Software Engineer",
-  tagline: "Full-stack · Next.js · Node.js · AWS",
+  tagline: "AI-native · Full-stack · Next.js · Node.js",
   location: "Dhaka, Bangladesh",
   email: "rohan.devwhiz@gmail.com",
   photo: "/profile.jpg",
@@ -17,7 +17,7 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/md-sadee-rohan-4180a7211/",
   },
   summary:
-    "Software engineer who builds web products end to end with Next.js, Node.js and TypeScript, from Postgres schemas and AWS pipelines to dashboards people actually enjoy using. I recently launched TruckerPaperwork, my own SaaS, and before that built a mentorship marketplace used by around 1,000 people and a school platform that runs daily in 10 classes.",
+    "AI-native software engineer who builds web products end to end with Next.js, Node.js and TypeScript. Claude Code and Cursor are part of how I plan, build, test and ship every day, and I review every line they write. I recently launched TruckerPaperwork, my own SaaS, and before that built a mentorship marketplace used by around 1,000 people and a school platform that runs daily in 10 classes.",
   highlights: [
     { value: "2+ yrs", label: "shipping production software" },
     { value: "~1,000", label: "active users on a marketplace I built" },
@@ -66,11 +66,11 @@ export const experience: Job[] = [
     codename: "Indie",
     points: [
       "Built and launched TruckerPaperwork (truckerpaperwork.com), a mobile-first PWA that lets truckers scan paperwork, merge it into one PDF and send it to brokers from their own Gmail.",
-      "Built Gmail OAuth sending (a separate email per broker, every send logged), Stripe subscriptions with webhooks, and direct-to-storage uploads protected by Postgres row-level security.",
+      "Built Gmail OAuth sending (a separate email per broker, every send logged), Lemon Squeezy subscriptions with webhooks, and direct-to-storage uploads protected by Postgres row-level security.",
       "Shipped a guest mode where the scanner runs entirely on the phone, plus SEO landing pages, a blog and PostHog analytics, with unit and Playwright end-to-end tests running in CI on every push.",
       "Delivered a full-stack MVP of LoadBoard for a client: a logistics marketplace with shipper, driver and admin dashboards, job review, driver document checks, invoices and map views.",
     ],
-    stack: ["Next.js", "TypeScript", "Supabase", "Stripe", "Gmail API", "Express", "Prisma", "Playwright"],
+    stack: ["Next.js", "TypeScript", "Supabase", "Lemon Squeezy", "Gmail API", "Express", "Prisma", "Playwright"],
   },
   {
     company: "Spade Digital",
@@ -103,271 +103,412 @@ export const experience: Job[] = [
   },
 ];
 
+export type ProjectCategory = "production" | "code" | "design";
+
+export const CATEGORIES: Record<ProjectCategory, { label: string; blurb: string }> = {
+  production: { label: "Production & client work", blurb: "Live products and client systems people use every day." },
+  code: { label: "Code showcase", blurb: "Open source, built to show how I structure, test and document software." },
+  design: { label: "Design & front-end", blurb: "Interfaces, motion and craft." },
+};
+
+export type Shot = { label: string; desktop: string; mobile: string };
+
 export type Project = {
   slug: string;
   name: string;
-  year: string;
+  category: ProjectCategory;
   tagline: string;
-  stack: string[];
-  points: string[];
-  url?: string;
-  repo?: string;
-  /** project = featured work, side = smaller builds, research = academic */
-  kind: "project" | "side" | "research";
-  /** company the project was built at */
-  org?: { name: string; url: string };
-  caseStudy?: { problem: string; solution: string; role: string; outcome: string };
-  /** screenshot shown on the card and at the top of the detail view */
-  image?: string;
+  year: string;
   /** short status label, e.g. "Live" or "Client MVP" */
   badge?: string;
-  /** shown on the one-page resume */
-  onResume?: boolean;
+  role: string;
+  timeline: string;
+  client?: string;
+  problem?: string;
+  /** step-by-step product flow (used for MVPs) */
+  flow?: { title: string; body: string }[];
+  features: string[];
+  highlights: string[];
+  stack: string[];
+  impact?: string;
+  /** headline numbers shown on cards */
+  stats?: { value: string; label: string }[];
+  url?: string;
+  urlLabel?: string;
+  repos?: { label: string; url: string }[];
+  demoNote?: string;
+  org?: { name: string; url: string };
+  shots: { desktop: string; mobile: string };
+  gallery?: Shot[];
   video?: string;
   color: string;
 };
 
+const P = (slug: string) => ({ desktop: `/projects/${slug}/desktop.jpg`, mobile: `/projects/${slug}/mobile.jpg` });
+const G = (slug: string, file: string, label: string): Shot => ({
+  label,
+  desktop: `/projects/${slug}/gallery/${file}-desktop.jpg`,
+  mobile: `/projects/${slug}/gallery/${file}-mobile.jpg`,
+});
+
 export const projects: Project[] = [
-  {
-    slug: "truckerpaperwork",
-    image: "/projects/truckerpaperwork.jpg",
-    name: "TruckerPaperwork",
-    year: "2026",
-    tagline: "My own SaaS: scan, merge and send trucking paperwork from a phone",
-    badge: "Live · my product",
-    stack: ["Next.js", "TypeScript", "Supabase", "Postgres RLS", "Stripe", "Gmail API", "PostHog", "Playwright"],
-    caseStudy: {
-      problem:
-        "Owner-operator truckers still photograph bills of lading and rate confirmations, then fight with scanner apps and email threads to get one clean PDF to each broker before they get paid.",
-      solution:
-        "A phone-first PWA: scan, auto-crop and enhance pages, merge them into one PDF and send it to saved brokers from the driver's own Gmail, with a full history of every send.",
-      role: "Founder and sole engineer: product, design, code, SEO and launch.",
-      outcome: "Launched in 2026 with Stripe subscriptions and an early-access program; guests can try the full scanner without signing up.",
-    },
-    points: [
-      "Mobile-first PWA: truckers scan bills of lading and rate confirmations, crop and enhance pages, merge them into one PDF and email it to brokers from their own Gmail.",
-      "Gmail OAuth sending with one email per broker (brokers never see each other) and every attempt logged for a full send history.",
-      "Phones upload straight to Supabase Storage with signed URLs; row-level security limits every table and bucket to its owner.",
-      "Guest mode runs the real scanner and editor on the device, so nothing reaches the server until sign-up.",
-      "Stripe subscriptions (checkout, customer portal, webhooks), SEO landing pages and blog, PostHog analytics with customer data masked in replays.",
-      "Typecheck, lint, unit and Playwright end-to-end tests run in CI on every push.",
-    ],
-    url: "https://www.truckerpaperwork.com/",
-    kind: "project",
-    onResume: true,
-    video: "/projects/truckerpaperwork-demo.mp4",
-    color: "#E95420",
-  },
+  /* ---------------- production ---------------- */
   {
     slug: "barnyard-recs",
-    image: "/projects/barnyard-recs.jpg",
     name: "Barnyard Recs",
+    category: "production",
+    tagline: "Mentorship marketplace where music producers book sessions with established artists",
     year: "2024–2026",
-    tagline: "Electronic-music mentorship marketplace on AWS (Spade Digital)",
-    org: { name: "Spade Digital", url: "https://spade-digital-usa.vercel.app/" },
     badge: "Live · ~1,000 users",
-    stack: ["Next.js", "TypeScript", "AWS S3", "MediaConvert", "Stripe", "Clerk", "CometChat", "Klaviyo"],
-    caseStudy: {
-      problem:
-        "An electronic-music mentorship brand needed to sell one-on-one lessons, mentorship programs and digital products without juggling separate booking, payment and video tools.",
-      solution:
-        "One platform with timezone-aware booking, Stripe checkout, video reviews processed on AWS, live chat and video calls, and separate dashboards for admins, instructors and students.",
-      role: "Software developer at Spade Digital: back-end architecture, video pipeline, dashboards and integrations.",
-      outcome: "Serves around 1,000 active users; analytics work lifted engagement by 60%.",
-    },
-    points: [
-      "One-on-one sessions and ongoing mentorships with timezone-aware booking, a digital products cart, coupons and Stripe payments.",
-      "Video reviews: students upload straight to S3, AWS MediaConvert transcodes them, and the app tracks processing status.",
-      "Admin, instructor and student dashboards with role-based access via Clerk; CometChat for real-time chat and video calls.",
-      "Cron jobs, Klaviyo email automation, and Meta Pixel + Google Analytics tracking (+60% engagement).",
+    role: "Software Engineer at Spade Digital: back end, payments, video pipeline, integrations",
+    timeline: "Jun 2024 – Jul 2026",
+    org: { name: "Spade Digital", url: "https://spade-digital-usa.vercel.app/" },
+    problem:
+      "Barnyard sold lessons through a patchwork of booking links, payment pages and chat apps. Instructors needed availability, automatic payouts and live sessions in one place; students needed to find the right artist, book across timezones and get feedback on their tracks.",
+    features: [
+      "Instructor roster filtered by genre, DAW and price, with one-on-one trials, bundles and ongoing mentorships booked against real availability in the student's timezone.",
+      "Stripe payments and refunds, with Stripe Connect onboarding so instructors are paid out automatically.",
+      "Video reviews: uploads go straight to S3 and AWS MediaConvert transcodes them, with live processing status.",
+      "Live sessions over CometChat chat and video, synced to Google Calendar with automated reminders.",
+      "Digital store with cart, coupons and secure downloads, plus admin, instructor and student dashboards.",
+    ],
+    highlights: [
+      "25-model Prisma schema covering sessions, availability, sales, coupons, payouts and transfers.",
+      "Timezone-aware scheduling across availability, bookings, reschedules and calendar sync.",
+      "Event-driven flows from Stripe webhooks and scheduled reminder jobs.",
+      "Growth stack: Klaviyo automation, Dub referral links, PostHog, Meta Pixel and Google Analytics (+60% engagement).",
+      "Hosted on AWS Amplify, with secrets in SSM and short-lived SSO credentials.",
+    ],
+    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "AWS S3", "MediaConvert", "Stripe Connect", "Clerk", "CometChat", "Google Calendar", "Klaviyo", "PostHog"],
+    impact: "Around 1,000 active users; analytics work lifted engagement by 60%.",
+    stats: [
+      { value: "~1,000", label: "active users" },
+      { value: "+60%", label: "engagement" },
     ],
     url: "https://www.barnyardrecs.com/",
-    kind: "project",
-    onResume: true,
+    shots: P("barnyard-recs"),
     color: "#C2185B",
   },
   {
+    slug: "truckerpaperwork",
+    name: "TruckerPaperwork",
+    category: "production",
+    tagline: "My own SaaS: truckers scan paperwork into one PDF and send it to brokers from their Gmail",
+    year: "2026",
+    badge: "Live · my product",
+    role: "Founder and sole engineer: product, design, code, SEO and launch",
+    timeline: "Sep 2026 – present",
+    problem:
+      "Drivers only get paid once brokers receive the bill of lading, rate confirmation and proof of delivery, which means photographing crumpled paper in a cab and fighting scanner apps and email threads, often with bad signal.",
+    features: [
+      "Scanner with automatic edge detection, perspective correction and a high-contrast document mode.",
+      "Every page of a load merged into one PDF, with reordering and preview before sending.",
+      "Sends from the driver's own Gmail: one separate email per broker, with a full send history.",
+      "Works offline: pages are saved on the phone and upload when signal returns.",
+      "Guests try the real scanner on their device before signing up; saved brokers, document history and an invoice template.",
+    ],
+    highlights: [
+      "Image processing runs in the browser on the phone itself.",
+      "PDFs up to 15 MB go straight to Supabase Storage through signed links, then get verified on the server.",
+      "Row-level security on every table and bucket, so drivers only ever reach their own data.",
+      "Offline-first with a service worker and an IndexedDB queue.",
+      "Lemon Squeezy subscriptions; unit and Playwright end-to-end tests run in CI on every push.",
+    ],
+    stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Postgres RLS", "Gmail API", "Lemon Squeezy", "pdf-lib", "PostHog", "Playwright"],
+    impact: "Launched in 2026 and in early access.",
+    url: "https://www.truckerpaperwork.com/",
+    shots: P("truckerpaperwork"),
+    video: "/projects/truckerpaperwork/demo.mp4",
+    color: "#E95420",
+  },
+  {
     slug: "sonamukh",
-    image: "/projects/sonamukh.jpg",
     name: "Sonamukh School Management",
+    category: "production",
+    tagline: "Bilingual school site and management system that replaced paper registers",
     year: "2025–2026",
-    tagline: "End-to-end school platform, live in 10 classes",
-    badge: "Live",
-    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Supabase", "Tailwind CSS"],
-    caseStudy: {
-      problem: "A growing school ran admissions, attendance and progress reports on paper registers.",
-      solution:
-        "A bilingual public site plus dashboards for operators, teachers, students and parents, covering admissions through to monthly attendance reports.",
-      role: "Lead developer: schema, auth, dashboards, uploads and staff manuals.",
-      outcome: "Live in 10 classes and used daily, replacing paper records.",
-    },
-    points: [
-      "Bilingual public site plus role-based dashboards for operators, teachers, students and parents, secured by JWT sessions and middleware.",
-      "PostgreSQL schema with Prisma for a class → shift → section hierarchy, online admissions, enrolment, user histories and attendance/progress records.",
-      "Used daily for admissions, attendance, reports and class management, replacing paper records and cutting routine admin time.",
-      "Operators manage notices, gallery media and school magazines with Supabase Storage uploads; wrote operator and teacher manuals for staff.",
+    badge: "Live · 10 classes",
+    role: "Lead developer: data model, auth, dashboards, uploads and staff manuals",
+    timeline: "Sep 2025 – present",
+    client: "Sonamukh Smart Academy",
+    problem:
+      "The school ran admissions, attendance and student progress on paper. Information was hard to find, monthly reports took hours, and parents had no visibility.",
+    features: [
+      "Bangla and English public site with notices, academics, gallery, school magazines and online admission applications.",
+      "Role-based dashboards for operators, teachers, students and parents.",
+      "Attendance by section and date: mark all present or absent in one tap, or Present / Absent / Late per student, with live counters.",
+      "Monthly attendance reports per section and per student, student IDs and ID cards, progress history.",
+      "Operators publish notices, media and magazines and control what appears on the homepage.",
     ],
+    highlights: [
+      "Prisma schema for the class → shift → section hierarchy, admissions, enrolment, attendance and progress.",
+      "Custom auth: bcrypt, signed HTTP-only cookie sessions and route-level access rules.",
+      "Full Bangla/English internationalisation with SEO.",
+      "Wrote operator and teacher manuals so staff run it themselves.",
+    ],
+    stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Supabase Storage", "next-intl", "TanStack Query", "Tailwind CSS"],
+    impact: "Used daily in 10 classes, replacing paper records and cutting routine admin time.",
+    stats: [{ value: "10", label: "classes, daily" }],
     url: "https://www.sonamukh.org/",
-    kind: "project",
-    onResume: true,
-    color: "#3EB34F",
-  },
-  {
-    slug: "doctor-tracker",
-    image: "/projects/doctor-tracker.jpg",
-    name: "Doctor Tracker",
-    year: "2026",
-    tagline: "Clinic admin portal with a Clean Architecture API, fully tested",
-    badge: "Open source",
-    stack: ["Next.js 16", "React 19", "TanStack Query", "Express 5", "MongoDB", "Zod", "Vitest"],
-    caseStudy: {
-      problem: "A full-stack take-home brief: a secure admin portal for clinics to manage doctors and their patients.",
-      solution:
-        "A Next.js 16 admin app and an Express 5 + MongoDB API built as production software, not a demo: layered architecture, secure sessions and full test coverage.",
-      role: "Sole engineer, front end to deployment.",
-      outcome: "Every requirement met and verified: 140 automated tests and a 122-check walkthrough of every screen.",
-    },
-    points: [
-      "Admin portal for clinics: manage a doctor roster, record each doctor's patients and see activity at a glance.",
-      "Express 5 + MongoDB API in Clean Architecture layers, with cookie auth and refresh-token rotation, rate limiting and idempotent writes.",
-      "140 unit and component tests across web and API, plus a 122-check walkthrough of every screen in light, dark, desktop and phone.",
-      "The README doubles as user manual and build log: user stories, architecture, failure handling and test strategy.",
-    ],
-    url: "https://doctortracker-portal.vercel.app/",
-    repo: "https://github.com/SadeeMsr/doctor-tracker-web",
-    kind: "project",
-    onResume: true,
-    color: "#0073E5",
-  },
-  {
-    slug: "loadboard",
-    image: "/projects/loadboard.jpg",
-    name: "LoadBoard",
-    year: "2026",
-    tagline: "Freight load board with live tracking for shippers, drivers and admins",
-    badge: "Client MVP · live demo",
-    stack: ["Next.js", "TypeScript", "Express", "Prisma", "PostgreSQL", "Supabase", "Mapbox", "Leaflet", "Recharts"],
-    caseStudy: {
-      problem:
-        "Small freight operations match shippers and drivers over phone calls and spreadsheets. The client wanted one place to post loads, vet drivers, follow each delivery and get paid.",
-      solution:
-        "A three-sided load board. Shippers post loads, admins approve jobs and drivers, drivers accept loads and confirm pickup and delivery with proof documents, and everyone follows the truck on a live map until the invoice is paid.",
-      role: "Sole engineer: data model, REST API, all three dashboards and deployment.",
-      outcome:
-        "Delivered as a working MVP with a live demo where the full job lifecycle runs end to end, from posting a load to a paid invoice.",
-    },
-    points: [
-      "Job lifecycle as a state machine: pending review → active → accepted → in transit → delivered → payment pending → completed, with every step written to an activity timeline.",
-      "Admin review queues for new jobs and driver accounts (approve, reject, suspend, restore), plus payments, users and platform dashboards.",
-      "Drivers upload bills of lading and pickup/delivery proof; shippers get invoices and rate drivers after delivery.",
-      "Live driver locations on a map with Mapbox geocoding, and revenue, volume and earnings charts per role.",
-      "Express API in Clean Architecture layers with Prisma on Supabase Postgres, JWT auth with refresh-token rotation, Zod validation and file uploads.",
-    ],
-    url: "https://loadboard-track.vercel.app/",
-    kind: "project",
-    color: "#7764D8",
-  },
-  {
-    slug: "skill-guild",
-    name: "The Skill Guild",
-    year: "2026",
-    tagline: "Front-end prototype of a homeschool learning platform (client demo)",
-    badge: "Front-end prototype",
-    stack: ["Next.js", "React Three Fiber", "Framer Motion", "Tailwind CSS"],
-    points: [
-      "Clickable front end for a client pitch: screens for parents, kids, homeschool co-ops and admins.",
-      "Kid-friendly views for courses, quests, rewards and certificates, with 3D scenes in React Three Fiber.",
-      "Front end only: built to demo the product before the back end was funded.",
-    ],
-    kind: "project",
-    color: "#F29B1D",
+    shots: P("sonamukh"),
+    gallery: [{ label: "Students", desktop: "/projects/sonamukh/gallery/01-students-desktop.jpg", mobile: "/projects/sonamukh/mobile.jpg" }],
+    color: "#1F7A3E",
   },
   {
     slug: "rp-billing",
-    name: "RP Billing ERP",
+    name: "RP Billing",
+    category: "production",
+    tagline: "Billing and accounting system that turns every booked event into invoices and ledgers",
     year: "2023",
-    tagline: "ERP front end for a 100-person photography company",
-    stack: ["React", "Redux", "Tailwind CSS"],
-    points: [
-      "Front end of an ERP for Reminiscence, a photography company, streamlining event management and collaboration for around 100 members.",
-      "Excel-like data grids with complex state so users can manipulate tables and generate dynamic bills.",
-      "Custom logic modules mapped to the company's business processes, improving employee efficiency by 30%.",
+    badge: "Live · 100-person team",
+    role: "Front-end developer (React, Redux); Django back end by a teammate",
+    timeline: "2023",
+    client: "Reminiscence Photography",
+    problem:
+      "A busy event photography company tracked clients, packages, advances and dues across spreadsheets. Revenue and pending payments were hard to see and billing every event was manual.",
+    features: [
+      "600+ clients with active and past events, total revenue and pending payment, filtered by activity and month.",
+      "Events with type, package, video package, add-ons, event lead, venue, date, discount and cash advance.",
+      "Invoices generated automatically when an event is created.",
+      "Ledgers, payment logging and cash inflows; monthly income statements.",
     ],
+    highlights: [
+      "Spreadsheet-like editable tables with complex Redux Toolkit state and batched saves.",
+      "Business rules for packages, add-ons, discounts and advances mapped to how the company bills.",
+      "Responsive across desktop and phone.",
+    ],
+    stack: ["React", "Redux Toolkit", "React Router", "Tailwind CSS", "Django REST"],
+    impact: "Used by the company's ~100 staff; improved employee efficiency by 30%.",
+    stats: [{ value: "+30%", label: "team efficiency" }],
     url: "https://www.rpbilling.com/",
-    kind: "side",
-    color: "#308280",
+    urlLabel: "Visit app",
+    shots: P("rp-billing"),
+    color: "#4338CA",
+  },
+  {
+    slug: "wozaif",
+    name: "Wozaif",
+    category: "production",
+    tagline: "UAE recruitment platform connecting migrant workers, employers and agencies",
+    year: "2024",
+    badge: "Live",
+    role: "Software Development Intern at Doodle Inc.: core features and serverless back end",
+    timeline: "Feb – Jun 2024",
+    client: "Wozaif (UAE)",
+    problem:
+      "Hiring skilled migrant workers involves candidates, employers and agencies who usually talk through middlemen and paperwork, with little transparency for workers.",
+    features: [
+      "Three user types (candidates, employers, agencies) with dashboards and three-way messaging.",
+      "Job search by title and location with advanced cascading filters and popular categories.",
+      "Six-step candidate profile and CV builder with document upload and video résumé.",
+      "Job posting, saved jobs, following employers and agencies, packages, training and certificates.",
+    ],
+    highlights: [
+      "Serverless back end on AWS Amplify, AppSync (GraphQL), Lambda and DynamoDB.",
+      "Cascading search and filters on top of a GraphQL API.",
+    ],
+    stack: ["Next.js", "TypeScript", "GraphQL", "AWS Amplify", "AppSync", "Lambda", "DynamoDB"],
+    url: "https://www.wozaif.com/",
+    shots: P("wozaif"),
+    color: "#F28C28",
+  },
+  {
+    slug: "loadboard",
+    name: "LoadBoard",
+    category: "production",
+    tagline: "Freight load board with live tracking for shippers, drivers and admins",
+    year: "2026",
+    badge: "Client MVP · live demo",
+    role: "Sole engineer: data model, REST API, three dashboards and deployment",
+    timeline: "Aug – Sep 2026",
+    problem:
+      "Small freight operations match shippers and drivers over phone calls and spreadsheets. The client wanted one place to post loads, vet drivers, follow each delivery and get paid.",
+    features: [
+      "Shippers post loads (full, partial, flatbed, refrigerated, hazmat, oversized), track status, view invoices and rate drivers.",
+      "Drivers find and accept loads, confirm pickup and delivery with proof documents, and see earnings.",
+      "Admin review queues for jobs and driver accounts, plus payments, users and analytics.",
+      "Live driver locations on a map with Mapbox geocoding.",
+    ],
+    highlights: [
+      "Job lifecycle modelled as a state machine, with every step in an activity timeline.",
+      "Express API in clean architecture layers, Prisma on Supabase Postgres, JWT with refresh tokens and Zod validation.",
+      "Installable as a phone app (PWA).",
+    ],
+    stack: ["Next.js", "TypeScript", "Express", "Prisma", "PostgreSQL", "Mapbox", "Leaflet", "Recharts"],
+    impact: "Working MVP with a live demo of the full job lifecycle.",
+    url: "https://loadboard-track.vercel.app/",
+    urlLabel: "Live demo",
+    shots: P("loadboard"),
+    color: "#FF6A1A",
   },
   {
     slug: "statement-tools",
     name: "Statement Tools",
+    category: "production",
+    tagline: "Bank-statement PDFs to clean Excel and CSV, plus PDF unlocking",
     year: "2026",
-    tagline: "Bank-statement PDFs to CSV and Excel, plus PDF unlocking",
-    stack: ["Next.js", "pdf-lib", "unpdf", "SheetJS"],
-    points: [
-      "Converts bank statements and PDF tables to CSV or Excel.",
-      "Unlocks password-protected PDF and Office files you own.",
+    badge: "Product",
+    role: "Solo: product and engineering",
+    timeline: "2026",
+    problem: "Banks send statements as PDFs, often password-protected, and accountants waste hours retyping transactions into spreadsheets.",
+    features: [
+      "Bank statement to CSV and to Excel with clean, labelled columns.",
+      "Visual PDF table mapper: mark columns on the PDF, preview headers live, merge files into one spreadsheet.",
+      "Merge statements and unlock password-protected PDF and Office files. No signup, no storage.",
     ],
-    kind: "side",
-    color: "#5F6B7A",
+    highlights: [
+      "Custom parsing pipeline: rebuilds text lines from PDF geometry, detects table grids, applies layout-specific parsers and scores confidence.",
+      "Exports XLSX and CSV; unlocks PDFs with qpdf.",
+    ],
+    stack: ["Next.js", "TypeScript", "pdf-lib", "unpdf", "SheetJS", "qpdf", "Tailwind CSS"],
+    shots: P("statement-tools"),
+    color: "#10A37F",
+  },
+
+  /* ---------------- code showcase ---------------- */
+  {
+    slug: "doctor-tracker",
+    name: "Doctor Tracker",
+    category: "code",
+    tagline: "Clinic admin portal built to show production-grade React and Node.js engineering",
+    year: "2026",
+    badge: "Open source",
+    role: "Sole engineer: front end, API, tests and deployment",
+    timeline: "Nov 2026",
+    features: [
+      "Doctor roster and patient records with search, filters, sorting and pagination.",
+      "Dashboard with admissions over time, patient conditions and KPIs.",
+      "URL-driven dialogs, keyboard shortcuts, light and dark themes.",
+    ],
+    highlights: [
+      "Express 5 + MongoDB API in Clean Architecture layers; Next.js 16 front end with Server Components and partial prerendering.",
+      "Argon2, httpOnly cookie sessions through a same-origin proxy, refresh-token rotation, Helmet, rate limiting, idempotent writes.",
+      "TanStack Query plus URL state (nuqs), no global store; React Compiler handles memoisation.",
+      "One request feeds the whole dashboard, debounced search, lazy charts, optimistic deletes, an index behind every filter.",
+      "140 unit and component tests and a 122-check walkthrough of every screen; README documents every decision.",
+    ],
+    stack: ["Next.js 16", "React 19", "TypeScript", "TanStack Query", "nuqs", "Express 5", "MongoDB", "Zod", "Vitest"],
+    stats: [
+      { value: "140", label: "automated tests" },
+      { value: "122/122", label: "screen checks" },
+      { value: "0.2–0.8s", label: "first paint, cold" },
+    ],
+    url: "https://doctortracker-portal.vercel.app/",
+    urlLabel: "Live demo",
+    repos: [
+      { label: "Web code", url: "https://github.com/SadeeMsr/doctor-tracker-web" },
+      { label: "API code", url: "https://github.com/SadeeMsr/doctor-tracker-api" },
+    ],
+    shots: P("doctor-tracker"),
+    color: "#0E5C46",
+  },
+
+  /* ---------------- design & front-end ---------------- */
+  {
+    slug: "skill-guild",
+    name: "The Skill Guild",
+    category: "design",
+    tagline: "Homeschool learning platform MVP with parent, kid, co-op and admin experiences",
+    year: "2026",
+    badge: "Front-end MVP · live demo",
+    role: "Front-end developer: every screen, interaction and the mock data layer",
+    timeline: "May – Jul 2026",
+    problem:
+      "Homeschooling families juggle courses, life-skills projects and co-op groups across many tools, and kids lose motivation without structure. The client needed something families and investors could click through before building the back end.",
+    flow: [
+      { title: "Public site", body: "3D hero, an 18-course catalog filtered by learning path and age, co-ops and a blog." },
+      { title: "Log in", body: "Email or Google/Apple. In the demo any email and password opens the parent portal." },
+      { title: "Parent portal", body: "Dashboard, child switcher, progress analytics, quests with proof and parent approval, certificates, rewards, billing." },
+      { title: "Kid mode", body: "Profile picker with PIN lock, a kid home with streaks and levels, and a course player where lessons unlock step by step." },
+      { title: "Co-op", body: "Four-step onboarding wizard, then a group dashboard with families, cohort progress, a leaderboard and a join code." },
+      { title: "Admin console", body: "Separate staff login and a platform overview with families, learners, recurring revenue and content." },
+    ],
+    features: [
+      "Four complete experiences in one app, each with its own navigation and mobile layout.",
+      "Gamified learning: points, streaks, levels, milestones, quests and a rewards store.",
+      "Course player with videos, readings, games, quizzes and audiobooks, notes and celebration animations.",
+    ],
+    highlights: [
+      "Typed mock data behind query functions and TanStack Query hooks, so a real API can replace the mocks without touching screens.",
+      "Kid progress and notes saved in the browser, so the demo behaves like the real product.",
+      "React Three Fiber 3D scenes and Framer Motion transitions.",
+      "PostHog analytics, SEO structured data and a crawlability audit.",
+    ],
+    stack: ["Next.js 16", "React 19", "TypeScript", "TanStack Query", "React Three Fiber", "Framer Motion", "PostHog", "Tailwind CSS"],
+    url: "https://homeschool-app-main.vercel.app/",
+    urlLabel: "Live demo",
+    demoNote: "Log in with any email and password. Kid PINs: Mia 1234, Leo 4321.",
+    shots: P("skill-guild"),
+    gallery: [
+      G("skill-guild", "01-login", "Log in"),
+      G("skill-guild", "02-kids-picker", "Kid profile picker"),
+      G("skill-guild", "03-kids-pin", "PIN lock"),
+      G("skill-guild", "04-kid-home", "Kid home"),
+      G("skill-guild", "05-kid-course", "Course player"),
+      G("skill-guild", "06-progress", "Progress"),
+      G("skill-guild", "07-quests", "Quests"),
+      G("skill-guild", "08-rewards", "Rewards"),
+      G("skill-guild", "09-coop", "Co-op dashboard"),
+      G("skill-guild", "10-coop-onboarding", "Co-op onboarding"),
+      G("skill-guild", "11-admin", "Admin console"),
+      G("skill-guild", "12-home", "Homepage"),
+    ],
+    color: "#5B21D6",
   },
   {
     slug: "spade-site",
-    image: "/projects/spade-site.jpg",
     name: "Spade Digital USA",
+    category: "design",
+    tagline: "Agency website with scroll-driven animation and a rotating work showcase",
     year: "2026",
-    tagline: "Website for a digital product agency",
-    stack: ["Next.js", "Framer Motion", "Tailwind CSS"],
-    points: ["Marketing site with animated sections and responsive layouts."],
+    badge: "Live",
+    role: "Front-end developer",
+    timeline: "Sep – Oct 2026",
+    features: [
+      "Animated hero with rotating brand work and a giant wordmark.",
+      "Services, about, team, careers and contact pages with reveal-on-scroll sections.",
+      "Page loader, smooth scrolling and a work showcase.",
+    ],
+    highlights: [
+      "Framer Motion scroll effects throughout (useScroll, useTransform, AnimatePresence).",
+      "Animations tuned to stay smooth on phones.",
+    ],
+    stack: ["Next.js", "React", "Framer Motion", "Tailwind CSS"],
     url: "https://spade-digital-usa.vercel.app/",
-    kind: "side",
-    color: "#1F1F1F",
+    shots: P("spade-site"),
+    color: "#F04E23",
   },
   {
-    slug: "genxintel",
-    image: "/projects/genxintel.jpg",
-    name: "GenXIntel 3D",
-    year: "2023",
-    tagline: "Scroll-driven 3D flight portfolio site",
-    stack: ["React Three Fiber", "Three.js", "Vite"],
-    points: ["A 3D landing experience: the camera flies through a scene as you scroll."],
-    url: "https://gen-xintel-portfolio-flight-r3-f.vercel.app/",
-    repo: "https://github.com/SadeeMsr/GenXintel-portfolio-flight-R3F",
-    kind: "side",
-    color: "#2D7FD6",
-  },
-  {
-    slug: "extensions",
-    name: "Browser Extensions",
-    year: "2025",
-    tagline: "Pixelsack and Boogly, built with WXT and React",
-    stack: ["WXT", "React", "TypeScript"],
-    points: [
-      "Pixelsack: helps designers and developers collect front-end references while browsing.",
-      "Boogly: an assistant that explains complex terms on compliance forms.",
+    slug: "oindriza",
+    name: "Oindriza Reza",
+    category: "design",
+    tagline: "Portfolio for an architect and urban researcher",
+    year: "2023–2026",
+    badge: "Live",
+    role: "Front-end developer, working with Oindriza on content and art direction",
+    timeline: "Nov 2023 – 2026",
+    features: [
+      "Sidebar navigation across seven collections: data visualisation, urban analytics, research, academic, professional, model fabrication and workshops.",
+      "Image galleries and sliders, embedded interactive maps and dashboards, downloadable CV.",
+      "Content driven from data files, so new projects need no layout changes.",
     ],
-    kind: "side",
-    color: "#B34CB3",
-  },
-  {
-    slug: "cloud-security",
-    name: "Sensitive Data Security in Cloud",
-    year: "2024",
-    tagline: "Hybrid cloud infrastructure research on AWS",
-    stack: ["AWS VPC", "VPN", "Hybrid Cloud"],
-    points: [
-      "Secure hybrid cloud infrastructure on AWS designed to navigate geopolitical data challenges.",
-      "AWS VPC architecture and VPN for robust data security.",
-      "Two phases: a local prototype, then migration to AWS, tackling scalability and real-time data access.",
-    ],
-    repo: "https://github.com/SadeeMsr/Sensitive-data-security-with-cloud__AWS",
-    kind: "research",
-    color: "#308280",
+    highlights: ["Editorial, image-first layout that stays clean on phones.", "NextUI, Framer Motion and Swiper for galleries and transitions."],
+    stack: ["Next.js", "React", "NextUI", "Framer Motion", "Swiper", "Tailwind CSS"],
+    url: "https://www.oindrizareza.com/",
+    shots: P("oindriza"),
+    color: "#8A6D4B",
   },
 ];
+
+export const projectsBy = (c: ProjectCategory) => projects.filter((p) => p.category === c);
 
 export type Skill = { name: string; group: string; level: "proficient" | "basic" };
 
 const proficient: [string, string][] = [
+  ["Claude Code", "AI"],
+  ["Cursor", "AI"],
+  ["LLM APIs (Claude, Gemini)", "AI"],
+  ["Prompt & context engineering", "AI"],
   ["TypeScript", "Language"],
   ["JavaScript", "Language"],
   ["Next.js", "Frontend"],

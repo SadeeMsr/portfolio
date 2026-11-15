@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useOS } from "../context";
 import { fmtLong, fmtTopbar, useNow } from "../hooks";
@@ -84,6 +85,14 @@ export function TopBar({ onActivities, activitiesOpen, notices, dismissNotice }:
         {notices.length > 0 && <span className="h-1.5 w-1.5 rounded-full bg-accent" />}
       </button>
 
+      <Link
+        href="/pro"
+        title="Switch to the professional portfolio"
+        className="mr-1 ml-auto flex h-6 items-center gap-1.5 rounded-full bg-white/12 px-3 text-[12px] font-semibold ring-1 ring-white/15 transition-colors hover:bg-accent hover:text-accent-fg hover:ring-accent"
+      >
+        <span className="h-1.5 w-1.5 rounded-full bg-white" /> Pro mode
+      </Link>
+
       <button
         type="button"
         aria-label="System menu"
@@ -91,7 +100,7 @@ export function TopBar({ onActivities, activitiesOpen, notices, dismissNotice }:
           setMenu(menu === "system" ? null : "system");
           setPowerOpen(false);
         }}
-        className={`${pill} ml-auto ${menu === "system" ? "bg-white/20" : ""}`}
+        className={`${pill} ${menu === "system" ? "bg-white/20" : ""}`}
       >
         <IconWifi className="h-4 w-4" />
         <IconVolume className="h-4 w-4" />

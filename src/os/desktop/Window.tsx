@@ -152,7 +152,7 @@ export function Window({ win, focused, area, areaRef, dispatch, onSnapPreview }:
                   ? focused
                     ? "bg-accent text-accent-fg hover:brightness-110"
                     : dark
-                      ? "bg-white/10 hover:bg-accent"
+                      ? "bg-white/10 hover:bg-accent hover:text-accent-fg"
                       : "bg-fg/10 hover:bg-accent hover:text-accent-fg"
                   : dark
                     ? "bg-white/10 hover:bg-white/20"

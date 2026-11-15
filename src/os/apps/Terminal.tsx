@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { education, experience, profile, projects, skills } from "@/data/resume";
 import { APP_IDS, type AppId } from "../apps";
@@ -26,7 +27,7 @@ const FILES: Record<string, string> = {
 
 const COMMANDS = [
   "help", "whoami", "about", "experience", "projects", "skills", "education", "contact", "resume",
-  "open", "theme", "accent", "neofetch", "ls", "cat", "pwd", "date", "echo", "history", "clear", "exit", "coffee", "sudo",
+  "open", "pro", "theme", "accent", "neofetch", "ls", "cat", "pwd", "date", "echo", "history", "clear", "exit", "coffee", "sudo",
 ];
 
 const A = ({ href, children }: { href: string; children: ReactNode }) => (
@@ -54,6 +55,7 @@ const LOGO = String.raw`
 
 export default function Terminal() {
   const os = useOS();
+  const router = useRouter();
   const settings = useSettings();
   const [lines, setLines] = useState<Line[]>([{ id: 0, node: WELCOME }]);
   const [input, setInput] = useState("");
@@ -98,6 +100,7 @@ export default function Terminal() {
               ["education", "degree & courses"],
               ["contact", "how to reach me"],
               ["resume", "download the PDF"],
+              ["pro", "switch to the professional site"],
               ["open <app>", `open an app (${APP_IDS.join(", ")})`],
               ["theme <light|dark|auto>", "change the theme"],
               ["accent <color>", `change accent (${Object.keys(ACCENTS).join(", ")})`],
@@ -114,6 +117,11 @@ export default function Terminal() {
             <span className="text-white/50">{"\n"}There may also be some undocumented commands. Real devs read the source.</span>
           </span>,
         );
+        break;
+      case "pro":
+      case "exit-fun":
+        push("Switching to Pro mode… put your tie on.");
+        setTimeout(() => router.push("/pro"), 500);
         break;
       case "whoami":
         push(`${profile.name}: ${profile.title} · ${profile.location} · ${profile.status.toLowerCase()}`);
@@ -146,10 +154,10 @@ export default function Terminal() {
                 {"\n"}
                 {"  "}
                 {p.stack.join(" · ")}
-                {(p.url || p.repo) && (
+                {(p.url || p.repos?.[0]) && (
                   <>
                     {"\n  "}
-                    <A href={(p.url ?? p.repo)!}>{p.url ?? p.repo}</A>
+                    <A href={(p.url ?? p.repos?.[0]?.url)!}>{p.url ?? p.repos?.[0]?.url}</A>
                   </>
                 )}
                 {"\n\n"}

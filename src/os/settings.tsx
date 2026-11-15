@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { ACCENTS, SETTINGS_KEY as KEY, WALLPAPERS, type Accent, type Wallpaper } from "./theme";
+import { ACCENTS, DEFAULT_ACCENT, SETTINGS_KEY as KEY, WALLPAPERS, accentVars, type Accent, type Wallpaper } from "./theme";
 
 export { ACCENTS, WALLPAPERS, type Accent, type Wallpaper };
 
@@ -13,7 +13,7 @@ type Settings = {
   wallpaper: Wallpaper;
 };
 
-const DEFAULTS: Settings = { theme: "dark", accent: "orange", wallpaper: "dusk" };
+const DEFAULTS: Settings = { theme: "dark", accent: DEFAULT_ACCENT, wallpaper: "dusk" };
 
 type Ctx = Settings & {
   resolvedTheme: "light" | "dark";
@@ -58,7 +58,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const root = document.documentElement;
     root.dataset.theme = resolvedTheme;
-    root.style.setProperty("--accent", ACCENTS[settings.accent]);
+    const v = accentVars(settings.accent, resolvedTheme);
+    root.style.setProperty("--accent", v.accent);
+    root.style.setProperty("--accent-fg", v.fg);
     if (loaded) {
       try {
         localStorage.setItem(KEY, JSON.stringify(settings));

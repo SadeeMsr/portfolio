@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Boot } from "./desktop/Boot";
 import { Desktop } from "./desktop/Desktop";
@@ -20,7 +19,6 @@ function Splash() {
 }
 
 function DesktopRoot() {
-  const router = useRouter();
   const [booting, setBooting] = useState<boolean | null>(null);
   const [firstBoot, setFirstBoot] = useState(false);
   const [gen, setGen] = useState(0);
@@ -28,7 +26,7 @@ function DesktopRoot() {
   useEffect(() => {
     let seen = false;
     try {
-      seen = localStorage.getItem(BOOTED_KEY) === "1";
+      seen = sessionStorage.getItem(BOOTED_KEY) === "1";
     } catch {
       /* private mode: just boot */
     }
@@ -41,7 +39,7 @@ function DesktopRoot() {
   useEffect(() => {
     if (booting !== false) return;
     try {
-      localStorage.setItem(BOOTED_KEY, "1");
+      sessionStorage.setItem(BOOTED_KEY, "1");
     } catch {
       /* ignore */
     }
@@ -50,10 +48,7 @@ function DesktopRoot() {
   if (booting === null) return <Splash />;
   if (booting)
     return (
-      <Boot
-        onDone={() => setBooting(false)}
-        onRecruiter={() => router.push("/resume")}
-      />
+      <Boot onDone={() => setBooting(false)} />
     );
   return (
     <Desktop
@@ -69,6 +64,13 @@ function DesktopRoot() {
 }
 
 export default function RohanOS() {
+  useEffect(() => {
+    try {
+      localStorage.setItem("rohanos.mode", "os");
+    } catch {
+      /* ignore */
+    }
+  }, []);
   const mobile = useMediaQuery("(max-width: 1023px), (pointer: coarse) and (max-height: 700px)");
   return (
     <SettingsProvider>

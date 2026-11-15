@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { profile } from "@/data/resume";
 import { APPS, searchApps, type AppId } from "../apps";
@@ -140,13 +141,13 @@ function QuickSettings({ onClose }: { onClose: () => void }) {
               <span className="block text-xs capitalize opacity-80">{settings.accent}</span>
             </span>
           </button>
-          <a href="/resume" className={tile(false)}>
+          <Link href="/pro" className={tile(false)}>
             <IconBriefcase className="h-5 w-5" />
             <span>
-              <span className="block font-semibold">Recruiter Mode</span>
-              <span className="block text-xs opacity-80">Plain resume</span>
+              <span className="block font-semibold">Pro mode</span>
+              <span className="block text-xs opacity-80">Professional site</span>
             </span>
-          </a>
+          </Link>
         </div>
         <div className="mx-auto mt-4 h-1 w-10 rounded-full bg-muted/50" />
       </div>
@@ -227,6 +228,13 @@ export function Phone() {
               </p>
             </div>
           </div>
+          <Link
+            href="/pro"
+            className="glass mt-3 flex items-center justify-between rounded-2xl bg-white/12 px-4 py-2.5 text-sm font-semibold text-white ring-1 ring-white/15 active:scale-[0.98]"
+          >
+            <span>Switch to Pro mode</span>
+            <span aria-hidden>→</span>
+          </Link>
 
           <p className="mt-6 text-center text-white [text-shadow:0_1px_3px_rgba(0,0,0,.6)]">
             <span className="block text-sm opacity-80" suppressHydrationWarning>{fmtLong(now)}</span>
