@@ -22,15 +22,16 @@ export const metadata: Metadata = {
     default: `${profile.name}: ${profile.title}`,
     template: `%s · ${profile.name}`,
   },
-  description: `${profile.summary} Explore my portfolio as RohanOS, a tiny operating system in your browser.`,
+  description: "Software engineer building web products end to end with Next.js, Node.js and TypeScript.",
   authors: [{ name: profile.name, url: profile.links.github }],
   keywords: ["Md Shadi Rohan", "software engineer", "software developer", "full-stack developer", "Next.js", "TypeScript", "Node.js", "AWS", "portfolio", "Dhaka"],
   openGraph: {
     title: `${profile.name}: ${profile.title}`,
-    description: profile.summary,
+    description: "Software engineer building web products end to end with Next.js, Node.js and TypeScript.",
     type: "website",
-    images: [{ url: profile.photo }],
+    siteName: "rohanships.com",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

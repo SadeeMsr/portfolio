@@ -4,7 +4,7 @@ import RohanOS from "@/os/RohanOS";
 
 export const metadata: Metadata = {
   title: "RohanOS",
-  description: `Explore ${profile.name}'s portfolio as a tiny operating system: draggable windows, a terminal, case studies and a mini-game.`,
+  description: "My portfolio as a tiny operating system.",
 };
 
 export default function OSPage() {

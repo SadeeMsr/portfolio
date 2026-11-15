@@ -4,7 +4,7 @@ import ProPage from "@/pro/ProPage";
 
 export const metadata: Metadata = {
   title: { absolute: `${profile.name} · ${profile.title}` },
-  description: profile.summary,
+  description: "Projects, case studies and experience of a software engineer who ships with AI.",
 };
 
 export default function Page() {

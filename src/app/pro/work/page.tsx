@@ -6,7 +6,7 @@ import { ProShell, ProTopBar } from "@/pro/ProPage";
 
 export const metadata: Metadata = {
   title: { absolute: `Case studies · ${profile.name}` },
-  description: `Production apps, client systems and open-source work by ${profile.name}, ${profile.title}.`,
+  description: "Production apps, client systems and open-source work.",
   alternates: { canonical: `${SITE_URL}/pro/work` },
 };
 
