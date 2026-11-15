@@ -14,7 +14,7 @@ export const profile = {
   status: "Open to new opportunities",
   links: {
     github: "https://github.com/SadeeMsr",
-    linkedin: "https://www.linkedin.com/in/md-sadee-rohan-4180a7211/",
+    linkedin: "https://www.linkedin.com/in/md-shadi-rohan/",
   },
   summary:
     "AI-native software engineer who builds web products end to end with Next.js, Node.js and TypeScript. Claude Code and Cursor are part of how I plan, build, test and ship every day, and I review every line they write. I recently launched TruckerPaperwork, my own SaaS, and before that built a mentorship marketplace used by around 1,000 people and a school platform that runs daily in 10 classes.",
