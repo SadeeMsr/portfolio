@@ -119,7 +119,8 @@ const PAGES: { id: Page; label: string }[] = [
 export default function Settings() {
   const [page, setPage] = useState<Page>("appearance");
   return (
-    <div className="@container flex h-full flex-col @xl:flex-row">
+    <div className="@container h-full">
+    <div className="flex h-full flex-col @xl:flex-row">
       <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-line bg-sidebar p-2 @xl:w-44 @xl:flex-col @xl:border-r @xl:border-b-0">
         {PAGES.map((p) => (
           <button
@@ -135,6 +136,7 @@ export default function Settings() {
       <div className="min-h-0 flex-1 overflow-auto os-scroll p-5 @md:p-7">
         {page === "appearance" ? <Appearance /> : page === "privacy" ? <Privacy /> : <About />}
       </div>
+    </div>
     </div>
   );
 }

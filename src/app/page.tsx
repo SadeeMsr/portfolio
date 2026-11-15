@@ -14,7 +14,7 @@ export default function Home() {
         <ul>
           {experience.map((j) => (
             <li key={j.company}>
-              {j.role} at {j.company} ({j.period})
+              {j.role} at {j.url ? <a href={j.url}>{j.company}</a> : j.company} ({j.period})
             </li>
           ))}
         </ul>

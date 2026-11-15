@@ -127,6 +127,7 @@ export default function Terminal() {
             {experience.map((j) => (
               <span key={j.company}>
                 <span className="text-[#8ae234]">{j.role}</span> @ <span className="font-bold">{j.company}</span>{" "}
+                {j.url && <A href={j.url}>{j.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</A>}{" "}
                 <span className="text-white/50">({j.period})</span>
                 {"\n"}
                 {j.points.map((p) => `  • ${p}\n`)}

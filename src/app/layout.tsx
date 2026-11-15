@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   description: `${profile.summary} Explore my portfolio as RohanOS, a tiny operating system in your browser.`,
   authors: [{ name: profile.name, url: profile.links.github }],
-  keywords: ["Md Shadi Rohan", "full-stack developer", "Next.js", "TypeScript", "Node.js", "AWS", "portfolio", "Dhaka"],
+  keywords: ["Md Shadi Rohan", "software engineer", "software developer", "full-stack developer", "Next.js", "TypeScript", "Node.js", "AWS", "portfolio", "Dhaka"],
   openGraph: {
     title: `${profile.name}: ${profile.title}`,
     description: profile.summary,

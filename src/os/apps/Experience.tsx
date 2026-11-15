@@ -32,7 +32,14 @@ export default function Experience() {
                 <span className="text-xs text-muted">codename “{job.codename}”</span>
               </div>
               <h3 className="mt-1.5 text-lg font-semibold">
-                {job.role} · <span className="text-fg/80">{job.company}</span>
+                {job.role} ·{" "}
+                {job.url ? (
+                  <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-fg/80 underline decoration-accent/50 underline-offset-4 hover:text-accent">
+                    {job.company} ↗
+                  </a>
+                ) : (
+                  <span className="text-fg/80">{job.company}</span>
+                )}
               </h3>
               <p className="text-sm text-muted">
                 {job.period} · {job.location}

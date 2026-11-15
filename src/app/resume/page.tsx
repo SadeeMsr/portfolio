@@ -63,7 +63,14 @@ export default function ResumePage() {
               <article key={j.company}>
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4">
                   <h3 className="font-semibold">
-                    {j.role}, {j.company}
+                    {j.role},{" "}
+                    {j.url ? (
+                      <a href={j.url} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
+                        {j.company} ↗
+                      </a>
+                    ) : (
+                      j.company
+                    )}
                   </h3>
                   <span className="text-sm text-muted">{j.period}</span>
                 </div>
@@ -78,10 +85,10 @@ export default function ResumePage() {
         </section>
 
         <section className="mt-10">
-          <H2>Projects & Research</H2>
+          <H2>Projects</H2>
           <div className="space-y-7">
             {projects
-              .filter((p) => p.slug !== "barnyard-recs" && p.slug !== "wozaef")
+              .filter((p) => p.onResume && p.slug !== "barnyard-recs" && p.slug !== "truckerpaperwork")
               .map((p) => (
                 <article key={p.slug}>
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4">

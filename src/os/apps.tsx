@@ -49,7 +49,7 @@ export const APPS: Record<AppId, AppDef> = {
     label: "About",
     icon: AppIcons.about,
     Component: About,
-    size: { w: 760, h: 620 },
+    size: { w: 800, h: 680 },
     keywords: ["profile", "bio", "education", "university", "photo", "contact"],
   },
   experience: {
@@ -67,7 +67,7 @@ export const APPS: Record<AppId, AppDef> = {
     label: "Projects",
     icon: AppIcons.projects,
     Component: Files,
-    size: { w: 820, h: 560 },
+    size: { w: 980, h: 660 },
     keywords: ["portfolio", "sonamukh", "barnyard", "erp", "billing", "wozaef", "research", "aws", "cloud"],
   },
   skills: {
@@ -91,8 +91,8 @@ export const APPS: Record<AppId, AppDef> = {
   },
   mail: {
     id: "mail",
-    title: "New Message",
-    label: "Mail",
+    title: "Contact",
+    label: "Contact",
     icon: AppIcons.mail,
     Component: Mail,
     size: { w: 620, h: 480 },
