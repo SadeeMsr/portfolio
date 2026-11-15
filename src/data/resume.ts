@@ -9,7 +9,7 @@ export const profile = {
   tagline: "Full-stack · Next.js · Node.js · AWS",
   location: "Dhaka, Bangladesh",
   email: "rohan.devwhiz@gmail.com",
-  photo: "/hackathonPfp.jpeg",
+  photo: "/profile.jpg",
   resumePdf: "/Md_Shadi_Rohan_Resume.pdf",
   status: "Open to new opportunities",
   links: {
