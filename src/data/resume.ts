@@ -18,6 +18,9 @@ export const profile = {
   },
   summary:
     "AI-native software engineer who builds web products end to end with Next.js, Node.js and TypeScript. Claude Code and Cursor are part of how I plan, build, test and ship every day, and I review every line they write. I recently launched TruckerPaperwork, my own SaaS, and before that built a mentorship marketplace used by around 1,000 people and a school platform that runs daily in 10 classes.",
+  /** shorter intro for the Pro hero */
+  pitch:
+    "AI-native software engineer building web products end to end with Next.js, Node.js and TypeScript. I ship faster with Claude Code and Cursor, and I review every line.",
   highlights: [
     { value: "2+ yrs", label: "shipping production software" },
     { value: "~1,000", label: "active users on a marketplace I built" },
@@ -507,7 +510,7 @@ export type Skill = { name: string; group: string; level: "proficient" | "basic"
 const proficient: [string, string][] = [
   ["Claude Code", "AI"],
   ["Cursor", "AI"],
-  ["LLM APIs (Claude, Gemini)", "AI"],
+  ["LLM APIs (Claude, GPT)", "AI"],
   ["Prompt & context engineering", "AI"],
   ["TypeScript", "Language"],
   ["JavaScript", "Language"],

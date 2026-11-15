@@ -220,7 +220,7 @@ function Hero() {
             <span className="text-muted">{profile.title}.</span>
           </motion.h1>
           <motion.p variants={rise} className="mt-6 max-w-xl text-lg leading-relaxed text-fg/80">
-            {profile.summary}
+            {profile.pitch}
           </motion.p>
           <motion.div variants={rise} className="mt-8 flex flex-wrap items-center gap-3">
             <motion.a
@@ -328,13 +328,13 @@ const AI_LOOP = [
 const AI_TOOLS = [
   { name: "Claude Code", role: "Agentic coding in the terminal", use: "Features end to end, refactors, tests, docs" },
   { name: "Cursor", role: "AI-first editor", use: "Inline edits, codebase-aware chat, quick fixes" },
-  { name: "LLM APIs", role: "AI inside products", use: "Claude and Gemini for generation, extraction and assistants" },
+  { name: "Claude & GPT", role: "Models I use every day", use: "Reasoning, research and writing, plus AI features inside products" },
 ];
 const AI_USES = [
   ["Architecture & planning", "Reasoning models to compare approaches and write the plan first"],
   ["Large refactors & migrations", "Agents work through many files; I review in small diffs"],
   ["Tests, fixtures & docs", "Generated fast, then checked by hand and by CI"],
-  ["Product features", "LLM calls with structured output, prototyped with Gemini in SignCode AI and Motion2Ads"],
+  ["Product features", "Claude and GPT calls with structured output for generation, extraction and assistants"],
 ];
 
 function AIWorkflow() {
