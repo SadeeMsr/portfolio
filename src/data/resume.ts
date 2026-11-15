@@ -573,7 +573,7 @@ export const skills: Skill[] = [
   ...basic.map(([name, group]) => ({ name, group, level: "basic" as const })),
 ];
 
-/** Path of a project's standalone case-study page, e.g. /work/barnyard-recs */
-export const workPath = (p: Project) => `/work/${p.page ?? p.slug}`;
+/** Path of a project's standalone case-study page, e.g. /pro/work/barnyard-recs */
+export const workPath = (p: Project) => `/pro/work/${p.page ?? p.slug}`;
 export const projectByPage = (page: string) => projects.find((p) => (p.page ?? p.slug) === page);
 export const SITE_URL = "https://rohanships.com";

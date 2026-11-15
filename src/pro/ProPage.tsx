@@ -122,7 +122,8 @@ function Tag({ children }: { children: ReactNode }) {
 }
 
 /* ---------- top bar ---------- */
-function TopBar() {
+/** offPage: used on /pro/work pages, where section links jump back to /pro */
+export function ProTopBar({ offPage = false }: { offPage?: boolean }) {
   const { resolvedTheme, set } = useSettings();
   const [scrolled, setScrolled] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -142,20 +143,39 @@ function TopBar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-5 md:px-8">
-        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold tracking-tight">
-          rohan<span className="text-accent">.</span>
-        </button>
+        {offPage ? (
+          <Link href="/pro" className="text-lg font-bold tracking-tight">
+            rohan<span className="text-accent">.</span>
+          </Link>
+        ) : (
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold tracking-tight">
+            rohan<span className="text-accent">.</span>
+          </button>
+        )}
         <nav className="ml-6 hidden items-center gap-1 md:flex">
-          {NAV.map((n) => (
-            <button
-              key={n.id}
-              type="button"
-              onClick={() => scrollTo(n.id)}
-              className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:bg-hover hover:text-fg"
-            >
-              {n.label}
-            </button>
-          ))}
+          {NAV.map((n) =>
+            offPage ? (
+              <Link
+                key={n.id}
+                href={`/pro#${n.id}`}
+                className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:bg-hover hover:text-fg"
+              >
+                {n.label}
+              </Link>
+            ) : (
+              <button
+                key={n.id}
+                type="button"
+                onClick={() => scrollTo(n.id)}
+                className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:bg-hover hover:text-fg"
+              >
+                {n.label}
+              </button>
+            ),
+          )}
+          <Link href="/pro/work" className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors hover:bg-hover hover:text-fg">
+            Case studies
+          </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <button
@@ -889,7 +909,7 @@ function Contact() {
 function Inner() {
   return (
     <div className="min-h-screen overflow-x-clip bg-bg text-fg">
-      <TopBar />
+      <ProTopBar />
       <main className="mx-auto max-w-6xl px-5 md:px-8">
         <Hero />
         <Highlights />
@@ -910,6 +930,15 @@ function Inner() {
         </div>
       </footer>
     </div>
+  );
+}
+
+/** Theme + motion providers shared by /pro and /pro/work pages. */
+export function ProShell({ children }: { children: ReactNode }) {
+  return (
+    <SettingsProvider>
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+    </SettingsProvider>
   );
 }
 

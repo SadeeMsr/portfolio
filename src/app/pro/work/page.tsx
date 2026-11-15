@@ -2,24 +2,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES, SITE_URL, profile, projectsBy, workPath, type ProjectCategory } from "@/data/resume";
 import { DeviceShowcase } from "@/components/devices";
-import { WorkFooter, WorkHeader } from "@/work/WorkChrome";
+import { ProShell, ProTopBar } from "@/pro/ProPage";
 
 export const metadata: Metadata = {
   title: { absolute: `Case studies · ${profile.name}` },
   description: `Production apps, client systems and open-source work by ${profile.name}, ${profile.title}.`,
-  alternates: { canonical: `${SITE_URL}/work` },
+  alternates: { canonical: `${SITE_URL}/pro/work` },
 };
 
 const ORDER: ProjectCategory[] = ["production", "code", "design"];
 
 export default function WorkIndex() {
   return (
+    <ProShell>
     <div className="min-h-screen overflow-x-clip bg-bg text-fg">
-      <WorkHeader />
-      <main className="mx-auto max-w-6xl px-5 pt-12 pb-20 md:px-8 md:pt-16">
+      <ProTopBar offPage />
+      <main className="mx-auto max-w-6xl px-5 pt-28 pb-20 md:px-8 md:pt-32">
         <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">Case studies</p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Things I&apos;ve built</h1>
         <p className="mt-3 max-w-2xl text-lg text-fg/80">Each project has its own page: the problem, what I built, the numbers and the screens.</p>
+        <Link
+          href="/pro"
+          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg shadow-lg shadow-accent/25 hover:brightness-110"
+        >
+          See the full portfolio <span aria-hidden>→</span>
+        </Link>
 
         {ORDER.map((c) => (
           <section key={c} className="mt-14">
@@ -54,11 +61,17 @@ export default function WorkIndex() {
           </section>
         ))}
       </main>
-      <WorkFooter>
-        <Link href="/pro" className="hover:text-fg">
-          Back to the portfolio →
-        </Link>
-      </WorkFooter>
+      <footer className="border-t border-line">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 text-sm text-muted sm:flex-row md:px-8">
+          <span>
+            © {profile.name} · {profile.title}
+          </span>
+          <Link href="/pro" className="font-medium text-accent hover:underline">
+            rohanships.com/pro →
+          </Link>
+        </div>
+      </footer>
     </div>
+    </ProShell>
   );
 }
