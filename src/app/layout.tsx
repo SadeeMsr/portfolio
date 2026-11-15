@@ -17,6 +17,7 @@ const ubuntuMono = Ubuntu_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rohanships.com"),
   title: {
     default: `${profile.name}: ${profile.title}`,
     template: `%s · ${profile.name}`,

@@ -84,7 +84,8 @@ export const experience: Job[] = [
     version: "2.0 LTS",
     codename: "Spade",
     points: [
-      "Built Barnyard Recs, an AWS-hosted electronic-music mentorship marketplace with around 1,000 active users: one-on-one and ongoing mentorship bookings, a digital products cart, coupons and Stripe payments.",
+      "Built Barnyard Recs end to end (front end, back end and AWS hosting), an electronic-music mentorship marketplace earning $50k+ ARR with around 1,000 active users: one-on-one and ongoing mentorship bookings, a digital products cart, coupons and Stripe payments.",
+      "Built a transaction ledger and automated Stripe Connect payouts that release instructors' earnings when their monthly goals are met.",
       "Built a video-review pipeline: direct uploads to Amazon S3, processed by AWS MediaConvert with progress tracking, plus CometChat real-time chat and video.",
       "Architected admin, instructor and student dashboards with role-based access via Clerk, timezone-aware scheduling, cron jobs and Klaviyo email automation.",
       "Integrated Meta Pixel and Google Analytics, boosting engagement by 60%.",
@@ -114,7 +115,8 @@ export const CATEGORIES: Record<ProjectCategory, { label: string; blurb: string 
   design: { label: "Design & front-end", blurb: "Interfaces, motion and craft." },
 };
 
-export type Shot = { label: string; desktop: string; mobile: string };
+/** mobile is optional: leave it out when the phone layout of that screen is not presentable */
+export type Shot = { label: string; desktop: string; mobile?: string };
 
 export type Project = {
   slug: string;
@@ -148,10 +150,10 @@ export type Project = {
 };
 
 const P = (slug: string) => ({ desktop: `/projects/${slug}/desktop.jpg`, mobile: `/projects/${slug}/mobile.jpg` });
-const G = (slug: string, file: string, label: string): Shot => ({
+const G = (slug: string, file: string, label: string, opts: { noMobile?: boolean } = {}): Shot => ({
   label,
   desktop: `/projects/${slug}/gallery/${file}-desktop.jpg`,
-  mobile: `/projects/${slug}/gallery/${file}-mobile.jpg`,
+  ...(opts.noMobile ? {} : { mobile: `/projects/${slug}/gallery/${file}-mobile.jpg` }),
 });
 
 export const projects: Project[] = [
@@ -162,29 +164,32 @@ export const projects: Project[] = [
     category: "production",
     tagline: "Mentorship marketplace where music producers book sessions with established artists",
     year: "2024–2026",
-    badge: "Live · ~1,000 users",
-    role: "Software Engineer at Spade Digital: back end, payments, video pipeline, integrations",
+    badge: "Live · $50k+ ARR",
+    role: "Built it end to end: front end, back end, payments and AWS cloud hosting",
     timeline: "Jun 2024 – Jul 2026",
     org: { name: "Spade Digital", url: "https://spade-digital-usa.vercel.app/" },
     problem:
-      "Barnyard sold lessons through a patchwork of booking links, payment pages and chat apps. Instructors needed availability, automatic payouts and live sessions in one place; students needed to find the right artist, book across timezones and get feedback on their tracks.",
+      "Lessons were sold through a patchwork of booking links, payment pages and chat apps. Instructors needed availability, payouts and live sessions in one place, and students needed to book the right artist across timezones.",
     features: [
-      "Instructor roster filtered by genre, DAW and price, with one-on-one trials, bundles and ongoing mentorships booked against real availability in the student's timezone.",
-      "Stripe payments and refunds, with Stripe Connect onboarding so instructors are paid out automatically.",
-      "Video reviews: uploads go straight to S3 and AWS MediaConvert transcodes them, with live processing status.",
-      "Live sessions over CometChat chat and video, synced to Google Calendar with automated reminders.",
+      "Instructor roster filtered by genre, DAW and price, with trials, bundles and mentorships booked in the student's own timezone.",
+      "Automatic instructor payouts through Stripe Connect when monthly goals are hit, with no manual admin step.",
+      "Video reviews: tracks upload straight to S3 and AWS MediaConvert transcodes them, with live status.",
+      "Live chat and video calls over CometChat, synced to Google Calendar with automated reminders.",
+      "Transaction ledger that traces every sale, refund and payout back to Stripe.",
       "Digital store with cart, coupons and secure downloads, plus admin, instructor and student dashboards.",
     ],
     highlights: [
+      "Owned the whole stack: Next.js front end, API and data layer, and AWS hosting.",
       "25-model Prisma schema covering sessions, availability, sales, coupons, payouts and transfers.",
-      "Timezone-aware scheduling across availability, bookings, reschedules and calendar sync.",
-      "Event-driven flows from Stripe webhooks and scheduled reminder jobs.",
-      "Growth stack: Klaviyo automation, Dub referral links, PostHog, Meta Pixel and Google Analytics (+60% engagement).",
-      "Hosted on AWS Amplify, with secrets in SSM and short-lived SSO credentials.",
+      "Timezone-aware scheduling across bookings, reschedules and calendar sync.",
+      "Stripe webhooks and scheduled jobs that check monthly goals and release payouts.",
+      "Growth tooling: Klaviyo, PostHog, Dub referral links, Meta Pixel and Google Analytics.",
+      "Deployed on AWS Amplify with secrets in SSM and short-lived SSO credentials.",
     ],
     stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "AWS S3", "MediaConvert", "Stripe Connect", "Clerk", "CometChat", "Google Calendar", "Klaviyo", "PostHog"],
-    impact: "Around 1,000 active users; analytics work lifted engagement by 60%.",
+    impact: "Earning $50k+ ARR with around 1,000 active users; analytics work lifted engagement by 60%.",
     stats: [
+      { value: "$50k+", label: "ARR" },
       { value: "~1,000", label: "active users" },
       { value: "+60%", label: "engagement" },
     ],
@@ -253,8 +258,21 @@ export const projects: Project[] = [
     impact: "Used daily in 10 classes, replacing paper records and cutting routine admin time.",
     stats: [{ value: "10", label: "classes, daily" }],
     url: "https://www.sonamukh.org/",
-    shots: P("sonamukh"),
-    gallery: [{ label: "Students", desktop: "/projects/sonamukh/gallery/01-students-desktop.jpg", mobile: "/projects/sonamukh/mobile.jpg" }],
+    shots: { desktop: "/projects/sonamukh/attendance-desktop.jpg", mobile: "/projects/sonamukh/attendance-mobile.jpg" },
+    gallery: [
+      G("sonamukh", "01-students", "Students", { noMobile: true }),
+      G("sonamukh", "02-student-manage", "Student profile"),
+      G("sonamukh", "03-teachers", "Teachers & classes", { noMobile: true }),
+      G("sonamukh", "04-teacher-assign", "Class assignments"),
+      G("sonamukh", "05-report-student", "Monthly attendance report"),
+      G("sonamukh", "06-classes", "Classes, shifts & sections", { noMobile: true }),
+      G("sonamukh", "07-applications", "Admission applications"),
+      G("sonamukh", "08-application-view", "Application details"),
+      G("sonamukh", "09-student-add", "Admit a student"),
+      G("sonamukh", "10-notices", "Noticeboard", { noMobile: true }),
+      G("sonamukh", "11-notice-add", "Add a notice"),
+      G("sonamukh", "12-credentials", "Login accounts", { noMobile: true }),
+    ],
     color: "#1F7A3E",
   },
   {

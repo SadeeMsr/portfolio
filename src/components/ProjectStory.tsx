@@ -52,12 +52,14 @@ function Lightbox({ shot, onClose }: { shot: Shot; onClose: () => void }) {
           </button>
         </div>
         <div className="flex w-full items-end justify-center gap-6">
-          <div className="hidden w-full max-w-4xl sm:block">
-            <Laptop src={shot.desktop} alt={`${shot.label}, desktop`} sizes="(max-width: 1200px) 80vw, 900px" />
+          <div className={`w-full max-w-4xl ${shot.mobile ? "hidden sm:block" : ""}`}>
+            <Laptop src={shot.desktop} alt={`${shot.label}, desktop`} sizes="(max-width: 1200px) 90vw, 900px" />
           </div>
-          <div className="w-[min(60vw,240px)] shrink-0 sm:w-[18%]">
-            <Phone src={shot.mobile} alt={`${shot.label}, mobile`} sizes="260px" />
-          </div>
+          {shot.mobile && (
+            <div className="w-[min(60vw,240px)] shrink-0 sm:w-[18%]">
+              <Phone src={shot.mobile} alt={`${shot.label}, mobile`} sizes="260px" />
+            </div>
+          )}
         </div>
       </div>
     </div>
