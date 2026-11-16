@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, priority: 1 },
     { url: `${SITE_URL}/pro`, priority: 0.9 },
     { url: `${SITE_URL}/pro/work`, priority: 0.8 },
+    { url: `${SITE_URL}/pro/workflow`, priority: 0.8 },
     { url: `${SITE_URL}/os`, priority: 0.6 },
     ...projects.map((p) => ({ url: `${SITE_URL}${workPath(p)}`, priority: 0.7 })),
   ];

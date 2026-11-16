@@ -381,6 +381,23 @@ function AIWorkflow() {
         ))}
       </motion.ol>
 
+      <motion.div
+        variants={rise}
+        {...inView}
+        className="mt-6 flex flex-col gap-4 rounded-2xl border border-accent/30 bg-accent/5 p-5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div>
+          <p className="font-semibold">The workflow I follow, step by step</p>
+          <p className="mt-0.5 text-sm text-muted">Matt Pocock’s AI coding workflow, plus the steps I’ve added on top of it.</p>
+        </div>
+        <Link
+          href="/pro/workflow"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg shadow-lg shadow-accent/25 transition hover:brightness-110"
+        >
+          Read how I work <span aria-hidden>→</span>
+        </Link>
+      </motion.div>
+
       <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
         <motion.div variants={stagger} {...inView} className="space-y-3">
           <motion.h3 variants={rise} className="text-sm font-semibold tracking-wider text-muted uppercase">
