@@ -95,6 +95,14 @@ export function ProjectStory({ p, showLinks = true }: { p: Project; showLinks?: 
               ) : (
                 "Own product"
               ))}
+            {p.client && p.org && (
+              <span className="block text-xs font-normal text-muted">
+                built at{" "}
+                <a href={p.org.url} {...ext} className="text-accent hover:underline">
+                  {p.org.name} ↗
+                </a>
+              </span>
+            )}
           </dd>
         </div>
       </dl>

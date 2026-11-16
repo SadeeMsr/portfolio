@@ -94,6 +94,7 @@ export const experience: Job[] = [
   },
   {
     company: "Doodle Inc.",
+    url: "https://www.thedoodleinc.com/",
     role: "Software Development Intern",
     period: "Feb 2024 – Jun 2024",
     location: "Dhaka, Bangladesh",
@@ -318,6 +319,7 @@ export const projects: Project[] = [
     role: "Software Development Intern at Doodle Inc.: core features and serverless back end",
     timeline: "Feb – Jun 2024",
     client: "Wozaif (UAE)",
+    org: { name: "Doodle Inc.", url: "https://www.thedoodleinc.com/" },
     problem:
       "Hiring skilled migrant workers involves candidates, employers and agencies who usually talk through middlemen and paperwork, with little transparency for workers.",
     features: [

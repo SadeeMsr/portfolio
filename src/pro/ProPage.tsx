@@ -795,7 +795,11 @@ function About() {
             <Image src={profile.photo} alt={profile.name} fill sizes="(max-width: 1024px) 80vw, 384px" className="object-cover object-[50%_35%]" />
           </motion.div>
           <motion.p variants={rise} className="mt-6 max-w-md leading-relaxed text-fg/85">
-            I studied Computer Science with a minor in Finance at {education.school}, interned on AWS serverless at Doodle,
+            I studied Computer Science with a minor in Finance at {education.school}, interned on AWS serverless at{" "}
+            <a href={experience.find((j) => j.company.startsWith("Doodle"))?.url} target="_blank" rel="noopener noreferrer" className="underline decoration-accent/50 underline-offset-4 hover:text-accent">
+              Doodle
+            </a>
+            ,
             then spent two years at Spade Digital shipping a marketplace used by around 1,000 people. Today I run my own SaaS,
             TruckerPaperwork, and take on client builds.
           </motion.p>
