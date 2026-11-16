@@ -77,7 +77,7 @@ export const experience: Job[] = [
   },
   {
     company: "Spade Digital",
-    url: "https://spade-digital-usa.vercel.app/",
+    url: "https://spadedigital.com/",
     role: "Software Developer",
     period: "Jun 2024 – Jul 2026",
     location: "Dhaka, Bangladesh",
@@ -169,7 +169,7 @@ export const projects: Project[] = [
     badge: "Live · $50k+ ARR",
     role: "Built it end to end: front end, back end, payments and AWS cloud hosting",
     timeline: "Jun 2024 – Jul 2026",
-    org: { name: "Spade Digital", url: "https://spade-digital-usa.vercel.app/" },
+    org: { name: "Spade Digital", url: "https://spadedigital.com/" },
     problem:
       "Lessons were sold through a patchwork of booking links, payment pages and chat apps. Instructors needed availability, payouts and live sessions in one place, and students needed to book the right artist across timezones.",
     features: [

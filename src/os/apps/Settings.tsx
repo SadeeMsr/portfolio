@@ -24,7 +24,7 @@ function Appearance() {
               <div
                 className={`h-14 ${t === "light" ? "bg-[#f4f4f4]" : t === "dark" ? "bg-[#2a2a2a]" : "bg-[linear-gradient(90deg,#f4f4f4_50%,#2a2a2a_50%)]"}`}
               />
-              <div className="py-1.5">{t === "auto" ? "Follow system" : t}</div>
+              <div className="px-1 py-1.5 leading-tight">{t === "auto" ? "System" : t}</div>
             </button>
           ))}
         </div>

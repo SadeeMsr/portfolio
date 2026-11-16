@@ -139,7 +139,7 @@ export function ProTopBar({ offPage = false }: { offPage?: boolean }) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color] duration-300 ${
-        scrolled ? "glass border-b border-line bg-bg/75" : "border-b border-transparent"
+        scrolled ? "glass border-b border-line bg-bg/95" : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-5 md:px-8">
@@ -630,10 +630,10 @@ function CodeShowcase({ p, onOpen }: { p: Project; onOpen: () => void }) {
           <h3 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">{p.name}</h3>
           <p className="mt-2 text-fg/80">{p.tagline}</p>
           {p.stats && (
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <div className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
               {p.stats.map((s) => (
-                <div key={s.label} className="rounded-xl border border-line bg-bg/60 p-3">
-                  <div className="text-xl font-bold tracking-tight md:text-2xl">{s.value}</div>
+                <div key={s.label} className="min-w-0 rounded-xl border border-line bg-bg/60 p-2.5 sm:p-3">
+                  <div className="text-base font-bold tracking-tight break-words sm:text-xl md:text-2xl">{s.value}</div>
                   <div className="text-[11px] leading-tight text-muted">{s.label}</div>
                 </div>
               ))}

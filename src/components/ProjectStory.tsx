@@ -107,11 +107,12 @@ export function ProjectStory({ p, showLinks = true }: { p: Project; showLinks?: 
         </div>
       )}
 
+      {/* three stats sit in one row even on phones, so none is left orphaned */}
       {p.stats && (
-        <div className="mt-6 grid grid-cols-2 gap-3 @md:grid-cols-3">
+        <div className={`mt-6 grid gap-2 @md:grid-cols-3 @md:gap-3 ${p.stats.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
           {p.stats.map((s) => (
-            <div key={s.label} className="rounded-xl border border-line bg-surface-2/60 p-4">
-              <div className="text-2xl font-bold tracking-tight">{s.value}</div>
+            <div key={s.label} className="min-w-0 rounded-xl border border-line bg-surface-2/60 p-3 @md:p-4">
+              <div className="text-lg font-bold tracking-tight break-words @md:text-2xl">{s.value}</div>
               <div className="text-xs text-muted">{s.label}</div>
             </div>
           ))}

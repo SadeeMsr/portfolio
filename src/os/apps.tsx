@@ -151,7 +151,10 @@ export const DOCK: AppId[] = ["about", "projects", "experience", "skills", "term
 export function searchApps(q: string): AppDef[] {
   const s = q.trim().toLowerCase();
   if (!s) return [];
-  return Object.values(APPS).filter(
-    (a) => a.title.toLowerCase().includes(s) || a.label.toLowerCase().includes(s) || a.keywords.some((k) => k.includes(s)),
-  );
+  // name matches first, so "contact" opens Contact rather than an app that only lists it as a keyword
+  const rank = (a: AppDef) =>
+    a.label.toLowerCase() === s ? 0 : a.label.toLowerCase().startsWith(s) ? 1 : a.title.toLowerCase().includes(s) || a.label.toLowerCase().includes(s) ? 2 : 3;
+  return Object.values(APPS)
+    .filter((a) => a.title.toLowerCase().includes(s) || a.label.toLowerCase().includes(s) || a.keywords.some((k) => k.includes(s)))
+    .sort((a, b) => rank(a) - rank(b));
 }

@@ -198,7 +198,7 @@ export default function Landing() {
           <a href={profile.resumePdf} download className="inline-flex items-center gap-1.5 hover:text-white">
             <IconDownload className="h-4 w-4" /> Download résumé
           </a>
-          <span aria-hidden>·</span>
+          <span aria-hidden className="hidden sm:inline">·</span>
           <span>{profile.email}</span>
           <span aria-hidden className="hidden md:inline">·</span>
           <span className="hidden md:inline">
